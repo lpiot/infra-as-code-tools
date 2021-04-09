@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      env: 
+        GITHUB_REPO${{ github.repository }}
+      run: |
+        echo $GITHUB_REPO
+        docker build . --file Dockerfile --tag ${GITHUB_REPO}:$(date +%s) --target tf --build-arg TERRAFORM_VERSION=0.14.8
