@@ -17,7 +17,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       env: 
-        GITHUB_REPO${{ github.repository }}
+        GITHUB_REPO: ${{ github.repository }}
+        GITHUB_REPO_OWNER: ${{ github.repository_owner }}
       run: |
-        echo $GITHUB_REPO
-        docker build . --file Dockerfile --tag ${GITHUB_REPO}:$(date +%s) --target tf --build-arg TERRAFORM_VERSION=0.14.8
+        echo ${GITHUB_REPO}
+        echo ${GITHUB_REPO_OWNER}
+        docker build . --file Dockerfile --tag toto:$(date +%s) --target tf --build-arg TERRAFORM_VERSION=0.14.8
